@@ -1,0 +1,1 @@
+ALTER TABLE `resources` ADD `sortOrder` int DEFAULT 100 NOT NULL;

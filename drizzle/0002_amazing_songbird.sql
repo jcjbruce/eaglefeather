@@ -1,0 +1,1 @@
+ALTER TABLE `resources` MODIFY COLUMN `provinces` text NOT NULL;

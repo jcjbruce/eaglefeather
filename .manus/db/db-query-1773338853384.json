@@ -1,0 +1,28 @@
+{
+  "query": "SHOW TABLES; SELECT * FROM __drizzle_migrations ORDER BY created_at DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Ru6nHTPsDJRdDu.24adf3276539 --database 3qWviYiMkVYDaWuirzSTJz --execute SHOW TABLES; SELECT * FROM __drizzle_migrations ORDER BY created_at DESC LIMIT 10;",
+  "rows": [
+    {
+      "Tables_in_3qWviYiMkVYDaWuirzSTJz": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_3qWviYiMkVYDaWuirzSTJz": "categories"
+    },
+    {
+      "Tables_in_3qWviYiMkVYDaWuirzSTJz": "link_reports"
+    },
+    {
+      "Tables_in_3qWviYiMkVYDaWuirzSTJz": "users"
+    },
+    {
+      "Tables_in_3qWviYiMkVYDaWuirzSTJz": "id\thash\tcreated_at"
+    },
+    {
+      "Tables_in_3qWviYiMkVYDaWuirzSTJz": "1\t814a08e40d7fc2bcfd458759d18319198ca8ae394f2fa15617a78678e9c9c93b\t1773338534797"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_3qWviYiMkVYDaWuirzSTJz\n__drizzle_migrations\ncategories\nlink_reports\nusers\nid\thash\tcreated_at\n1\t814a08e40d7fc2bcfd458759d18319198ca8ae394f2fa15617a78678e9c9c93b\t1773338534797\n",
+  "stderr": "",
+  "execution_time_ms": 130
+}

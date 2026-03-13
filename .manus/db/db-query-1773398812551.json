@@ -1,0 +1,86 @@
+{
+  "query": "SELECT provinces, COUNT(*) as cnt FROM resources WHERE isPublished = 1 GROUP BY provinces ORDER BY provinces;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2Ru6nHTPsDJRdDu.24adf3276539 --database 3qWviYiMkVYDaWuirzSTJz --execute SELECT provinces, COUNT(*) as cnt FROM resources WHERE isPublished = 1 GROUP BY provinces ORDER BY provinces;",
+  "rows": [
+    {
+      "provinces": "[\"AB\"]",
+      "cnt": "6"
+    },
+    {
+      "provinces": "[\"BC\", \"YT\"]",
+      "cnt": "1"
+    },
+    {
+      "provinces": "[\"BC\",\"YT\"]",
+      "cnt": "1"
+    },
+    {
+      "provinces": "[\"BC\"]",
+      "cnt": "10"
+    },
+    {
+      "provinces": "[\"MB\"]",
+      "cnt": "6"
+    },
+    {
+      "provinces": "[\"National\"]",
+      "cnt": "46"
+    },
+    {
+      "provinces": "[\"NB\", \"NS\", \"PE\", \"NL\"]",
+      "cnt": "2"
+    },
+    {
+      "provinces": "[\"NB\"]",
+      "cnt": "2"
+    },
+    {
+      "provinces": "[\"NL\"]",
+      "cnt": "1"
+    },
+    {
+      "provinces": "[\"NS\"]",
+      "cnt": "3"
+    },
+    {
+      "provinces": "[\"NT\"]",
+      "cnt": "4"
+    },
+    {
+      "provinces": "[\"NU\"]",
+      "cnt": "1"
+    },
+    {
+      "provinces": "[\"ON\",\"National\"]",
+      "cnt": "1"
+    },
+    {
+      "provinces": "[\"ON\"]",
+      "cnt": "15"
+    },
+    {
+      "provinces": "[\"PE\"]",
+      "cnt": "1"
+    },
+    {
+      "provinces": "[\"QC\"]",
+      "cnt": "5"
+    },
+    {
+      "provinces": "[\"SK\",\"National\"]",
+      "cnt": "2"
+    },
+    {
+      "provinces": "[\"SK\"]",
+      "cnt": "6"
+    },
+    {
+      "provinces": "[\"YT\"]",
+      "cnt": "4"
+    }
+  ],
+  "messages": [],
+  "stdout": "provinces\tcnt\n[\"AB\"]\t6\n[\"BC\", \"YT\"]\t1\n[\"BC\",\"YT\"]\t1\n[\"BC\"]\t10\n[\"MB\"]\t6\n[\"National\"]\t46\n[\"NB\", \"NS\", \"PE\", \"NL\"]\t2\n[\"NB\"]\t2\n[\"NL\"]\t1\n[\"NS\"]\t3\n[\"NT\"]\t4\n[\"NU\"]\t1\n[\"ON\",\"National\"]\t1\n[\"ON\"]\t15\n[\"PE\"]\t1\n[\"QC\"]\t5\n[\"SK\",\"National\"]\t2\n[\"SK\"]\t6\n[\"YT\"]\t4\n",
+  "stderr": "",
+  "execution_time_ms": 182
+}
