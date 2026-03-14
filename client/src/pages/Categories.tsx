@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearch } from "wouter";
 import { Search, Filter, Feather, Brain, Stethoscope, HeartHandshake, Baby, Users, Star, Heart } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
 import { ResourceCard } from "@/components/ResourceCard";
-import { trpc } from "@/lib/trpc";
+import { MOCK_CATEGORIES, getFilteredResources } from "@/lib/mockData";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   "mental-health":    <Brain className="w-4 h-4" />,
@@ -45,11 +45,10 @@ export default function Categories() {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [inputValue, setInputValue] = useState(initialSearch);
 
-  const { data: categories = [] } = trpc.categories.list.useQuery();
-
+  const categories = MOCK_CATEGORIES;
   const activeCatObj = categories.find(c => c.slug === selectedCat);
 
-  const { data: resources = [], isLoading } = trpc.resources.list.useQuery({
+  const resources = getFilteredResources({
     categoryId: activeCatObj?.id,
     province: selectedProvince || undefined,
     search: searchQuery || undefined,
@@ -148,24 +147,13 @@ export default function Categories() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-muted-foreground">
-                {isLoading ? "Loading..." : `${resources.length} resource${resources.length !== 1 ? "s" : ""} found`}
+                {`${resources.length} resource${resources.length !== 1 ? "s" : ""} found`}
                 {activeCatObj ? ` in ${activeCatObj.name}` : ""}
                 {selectedProvince ? ` · ${PROVINCES.find(p => p.code === selectedProvince)?.label}` : ""}
               </p>
             </div>
 
-            {isLoading ? (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-xl border border-border p-5 animate-pulse">
-                    <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                    <div className="h-3 bg-muted rounded w-1/2 mb-4" />
-                    <div className="h-3 bg-muted rounded w-full mb-1" />
-                    <div className="h-3 bg-muted rounded w-5/6" />
-                  </div>
-                ))}
-              </div>
-            ) : resources.length === 0 ? (
+            {resources.length === 0 ? (
               <div className="text-center py-16 text-muted-foreground">
                 <Search className="w-10 h-10 mx-auto mb-3 opacity-30" />
                 <p className="font-medium">No resources found</p>

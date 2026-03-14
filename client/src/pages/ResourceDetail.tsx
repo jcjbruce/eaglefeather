@@ -2,19 +2,22 @@ import { useState } from "react";
 import { useParams, Link } from "wouter";
 import { Phone, Globe, Mail, ArrowLeft, Flag, CheckCircle, Clock, AlertCircle, ExternalLink, Users } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
-import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { getResourceById, MOCK_CATEGORIES } from "@/lib/mockData";
 
 function ReportModal({ resourceId, onClose }: { resourceId: number; onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
-  const report = trpc.resources.reportLink.useMutation({
-    onSuccess: () => {
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSubmit = () => {
+    setIsPending(true);
+    setTimeout(() => {
+      setIsPending(false);
       toast.success("Report submitted. Thank you for helping keep this directory accurate.");
       onClose();
-    },
-    onError: () => toast.error("Could not submit report. Please try again."),
-  });
+    }, 500);
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
@@ -48,11 +51,11 @@ function ReportModal({ resourceId, onClose }: { resourceId: number; onClose: () 
         </div>
         <div className="flex gap-3 mt-4">
           <button
-            onClick={() => report.mutate({ resourceId, reporterEmail: email || undefined, comment: comment || undefined })}
-            disabled={report.isPending}
+            onClick={handleSubmit}
+            disabled={isPending}
             className="flex-1 bg-primary text-white font-semibold py-2 rounded-md text-sm hover:opacity-90 disabled:opacity-50"
           >
-            {report.isPending ? "Submitting..." : "Submit Report"}
+            {isPending ? "Submitting..." : "Submit Report"}
           </button>
           <button onClick={onClose} className="flex-1 border border-border py-2 rounded-md text-sm hover:bg-muted">
             Cancel
@@ -67,40 +70,21 @@ export default function ResourceDetail() {
   const { id } = useParams<{ id: string }>();
   const [showReport, setShowReport] = useState(false);
 
-  const { data: resource, isLoading, error } = trpc.resources.byId.useQuery(
-    { id: parseInt(id ?? "0") },
-    { enabled: !!id }
-  );
-
-  const { data: categories = [] } = trpc.categories.list.useQuery();
+  const resource = getResourceById(parseInt(id ?? "0"));
+  const categories = MOCK_CATEGORIES;
   const category = categories.find(c => c.id === resource?.categoryId);
 
   const provinces: string[] = (() => {
     try { return JSON.parse(resource?.provinces ?? '["National"]'); } catch { return ["National"]; }
   })();
 
-  if (isLoading) {
-    return (
-      <PageLayout>
-        <div className="container py-12">
-          <div className="max-w-2xl animate-pulse">
-            <div className="h-6 bg-muted rounded w-1/4 mb-4" />
-            <div className="h-8 bg-muted rounded w-3/4 mb-2" />
-            <div className="h-4 bg-muted rounded w-1/2 mb-6" />
-            <div className="h-24 bg-muted rounded mb-4" />
-          </div>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  if (error || !resource) {
+  if (!resource) {
     return (
       <PageLayout>
         <div className="container py-12 text-center">
           <h1 className="font-serif text-2xl font-bold mb-2">Resource not found</h1>
           <p className="text-muted-foreground mb-4">This resource may have been removed or the link may be incorrect.</p>
-          <Link href="/categories" className="text-primary underline">Browse all resources</Link>
+          <Link href="/browse" className="text-primary underline">Browse all resources</Link>
         </div>
       </PageLayout>
     );
@@ -110,7 +94,7 @@ export default function ResourceDetail() {
     <PageLayout>
       <div className="container py-8 max-w-3xl">
         {/* Back */}
-        <Link href="/categories" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary mb-6 no-underline transition-colors">
+        <Link href="/browse" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary mb-6 no-underline transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to resources
         </Link>
 

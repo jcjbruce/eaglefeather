@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Phone, Globe, AlertCircle, CheckCircle, Clock, ExternalLink, Flag } from "lucide-react";
-import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
 type Resource = {
@@ -63,13 +62,17 @@ function VerificationBadge({ lastVerified }: { lastVerified?: Date | null }) {
 function ReportModal({ resourceId, onClose }: { resourceId: number; onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
-  const report = trpc.resources.reportLink.useMutation({
-    onSuccess: () => {
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSubmit = () => {
+    setIsPending(true);
+    // Simulate submission in static mode
+    setTimeout(() => {
+      setIsPending(false);
       toast.success("Report submitted. Thank you for helping keep this directory accurate.");
       onClose();
-    },
-    onError: () => toast.error("Could not submit report. Please try again."),
-  });
+    }, 500);
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
@@ -103,11 +106,11 @@ function ReportModal({ resourceId, onClose }: { resourceId: number; onClose: () 
         </div>
         <div className="flex gap-3 mt-4">
           <button
-            onClick={() => report.mutate({ resourceId, reporterEmail: email || undefined, comment: comment || undefined })}
-            disabled={report.isPending}
+            onClick={handleSubmit}
+            disabled={isPending}
             className="flex-1 bg-primary text-white font-semibold py-2 rounded-md text-sm hover:opacity-90 disabled:opacity-50"
           >
-            {report.isPending ? "Submitting..." : "Submit Report"}
+            {isPending ? "Submitting..." : "Submit Report"}
           </button>
           <button onClick={onClose} className="flex-1 border border-border py-2 rounded-md text-sm hover:bg-muted">
             Cancel

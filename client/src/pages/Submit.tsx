@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Send, CheckCircle } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
-import { trpc } from "@/lib/trpc";
+import { MOCK_CATEGORIES } from "@/lib/mockData";
 import { toast } from "sonner";
 
 const PROVINCES = [
@@ -10,6 +10,7 @@ const PROVINCES = [
 
 export default function Submit() {
   const [submitted, setSubmitted] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [form, setForm] = useState({
     resourceName: "",
     url: "",
@@ -23,18 +24,7 @@ export default function Submit() {
     comment: "",
   });
 
-  const { data: categories = [] } = trpc.categories.list.useQuery();
-
-  const submit = trpc.resources.submit.useMutation({
-    onSuccess: () => {
-      setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-    onError: (err) => {
-      toast.error("Could not submit. Please check the form and try again.");
-      console.error(err);
-    },
-  });
+  const categories = MOCK_CATEGORIES;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -46,18 +36,13 @@ export default function Submit() {
       toast.error("Resource name is required.");
       return;
     }
-    submit.mutate({
-      ...form,
-      url: form.url || undefined,
-      phone: form.phone || undefined,
-      categorySlug: form.categorySlug || undefined,
-      province: form.province || undefined,
-      whoItServes: form.whoItServes || undefined,
-      description: form.description || undefined,
-      contactName: form.contactName || undefined,
-      contactEmail: form.contactEmail || undefined,
-      comment: form.comment || undefined,
-    });
+    setIsPending(true);
+    // Simulate submission in static mode
+    setTimeout(() => {
+      setIsPending(false);
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 800);
   };
 
   if (submitted) {
@@ -77,7 +62,7 @@ export default function Submit() {
             If you provided your email, we'll reach out if we have questions.
           </p>
           <div className="flex gap-3 justify-center">
-            <a href="/categories" className="bg-primary text-white font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 text-sm no-underline">
+            <a href="/browse" className="bg-primary text-white font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 text-sm no-underline">
               Browse resources
             </a>
             <button
@@ -273,15 +258,15 @@ export default function Submit() {
 
           <button
             type="submit"
-            disabled={submit.isPending}
+            disabled={isPending}
             className="w-full bg-primary text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50 text-base"
           >
-            {submit.isPending ? (
+            {isPending ? (
               <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
             ) : (
               <Send className="w-4 h-4" />
             )}
-            {submit.isPending ? "Submitting..." : "Submit for review"}
+            {isPending ? "Submitting..." : "Submit for review"}
           </button>
         </form>
       </div>

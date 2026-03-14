@@ -6,9 +6,9 @@ import {
 } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
 import { ResourceCard } from "@/components/ResourceCard";
-import { trpc } from "@/lib/trpc";
+import { MOCK_CATEGORIES, getFilteredResources, getCrossCountsByProvinceAndCategory } from "@/lib/mockData";
 
-// ── Constants ────────────────────────────────────────────────────────────────
+// Constants
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   "mental-health":     <Brain className="w-4 h-4" />,
@@ -38,7 +38,7 @@ const JURISDICTIONS = [
   { code: "YT", name: "Yukon", shortName: "Yukon", type: "territory" },
 ];
 
-// ── Component ────────────────────────────────────────────────────────────────
+// Component
 
 export default function Browse() {
   const searchParams = useSearch();
@@ -55,9 +55,9 @@ export default function Browse() {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [submittedSearch, setSubmittedSearch] = useState(initialSearch);
 
-  // Data fetching
-  const { data: allCategories = [] } = trpc.categories.list.useQuery();
-  const { data: crossCounts = [] } = trpc.resources.countsByProvinceAndCategory.useQuery();
+  // Static data
+  const allCategories = MOCK_CATEGORIES;
+  const crossCounts = useMemo(() => getCrossCountsByProvinceAndCategory(), []);
 
   // Find the category ID for the selected topic slug
   const selectedCategoryId = useMemo(() => {
@@ -67,14 +67,11 @@ export default function Browse() {
   }, [selectedTopic, allCategories]);
 
   // Fetch resources based on current filters
-  const { data: resources = [], isLoading } = trpc.resources.list.useQuery(
-    {
-      categoryId: selectedCategoryId,
-      province: selectedRegion || undefined,
-      search: submittedSearch || undefined,
-    },
-    { enabled: true }
-  );
+  const resources = useMemo(() => getFilteredResources({
+    categoryId: selectedCategoryId,
+    province: selectedRegion || undefined,
+    search: submittedSearch || undefined,
+  }), [selectedCategoryId, selectedRegion, submittedSearch]);
 
   // Compute dynamic province counts based on selected topic
   const provinceCounts = useMemo(() => {
@@ -167,7 +164,7 @@ export default function Browse() {
       <div className="container py-8">
         <div className="flex flex-col lg:flex-row gap-8">
 
-          {/* ── Left sidebar: Region filter ─────────────────────────────────────── */}
+          {/* Left sidebar: Region filter */}
           <aside className="lg:w-72 shrink-0">
             <div className="bg-white rounded-xl border border-border overflow-hidden lg:sticky lg:top-24">
               <div className="px-4 py-3 bg-muted/30 border-b border-border">
@@ -249,7 +246,7 @@ export default function Browse() {
             </div>
           </aside>
 
-          {/* ── Main content area ───────────────────────────────────────────────── */}
+          {/* Main content area */}
           <div className="flex-1 min-w-0">
 
             {/* Topic pills */}
@@ -322,24 +319,12 @@ export default function Browse() {
             )}
 
             {/* Results count */}
-            {!isLoading && (
-              <p className="text-sm text-muted-foreground mb-4">
-                {resources.length} resource{resources.length !== 1 ? "s" : ""} found
-              </p>
-            )}
+            <p className="text-sm text-muted-foreground mb-4">
+              {resources.length} resource{resources.length !== 1 ? "s" : ""} found
+            </p>
 
             {/* Resource grid */}
-            {isLoading ? (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-xl border border-border p-5 animate-pulse">
-                    <div className="h-4 bg-muted rounded w-3/4 mb-3" />
-                    <div className="h-3 bg-muted rounded w-full mb-1" />
-                    <div className="h-3 bg-muted rounded w-5/6" />
-                  </div>
-                ))}
-              </div>
-            ) : resources.length === 0 ? (
+            {resources.length === 0 ? (
               <div className="text-center py-16 text-muted-foreground bg-white rounded-xl border border-border">
                 <Search className="w-10 h-10 mx-auto mb-3 opacity-20" />
                 <p className="font-medium text-foreground">No resources found for these filters.</p>

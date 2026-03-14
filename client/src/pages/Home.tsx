@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Search, Phone, MapPin, ChevronRight, Feather, Brain, Stethoscope, HeartHandshake, Baby, Users, Star, Heart } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
-import { trpc } from "@/lib/trpc";
+import { MOCK_CATEGORIES } from "@/lib/mockData";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   "mental-health":    <Brain className="w-6 h-6" />,
@@ -29,7 +29,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [, navigate] = useLocation();
 
-  const { data: categories = [] } = trpc.categories.list.useQuery();
+  const categories = MOCK_CATEGORIES;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <PageLayout>
-      {/* ── Hero ─────────────────────────────────────────────────────────────── */}
+      {/* Hero */}
       <section className="bg-gradient-to-br from-[#0d2b26] to-[#0A6E60] text-white py-16 md:py-24">
         <div className="container">
           <div className="max-w-2xl">
@@ -78,7 +78,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Crisis callout ────────────────────────────────────────────────────── */}
+      {/* Crisis callout */}
       <section className="bg-red-900 text-white py-6">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -113,7 +113,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Category cards ────────────────────────────────────────────────────── */}
+      {/* Category cards */}
       <section className="py-14 container">
         <div className="mb-8">
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-2">Browse by Topic</p>
@@ -149,7 +149,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Province filter ───────────────────────────────────────────────────── */}
+      {/* Province filter */}
       <section className="bg-muted py-12">
         <div className="container">
           <div className="mb-6">
@@ -174,7 +174,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── About / trust ─────────────────────────────────────────────────────── */}
+      {/* About / trust */}
       <section className="py-14 container">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
@@ -185,7 +185,7 @@ export default function Home() {
               Every resource is verified by a real person before it's listed — no automated scraping, no paid placements.
             </p>
             <p className="text-base text-foreground/80 leading-relaxed mb-6">
-              We focus specifically on First Nations peoples. We respectfully acknowledge that Inuit and Métis peoples
+              We focus specifically on First Nations peoples. We respectfully acknowledge that Inuit and Metis peoples
               have their own dedicated organizations — links to those communities are in our footer.
             </p>
             <div className="flex gap-4">
@@ -213,7 +213,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Land Acknowledgement ──────────────────────────────────────────────── */}
+      {/* Land Acknowledgement */}
       <section className="bg-[#0d2b26] text-white py-12">
         <div className="container max-w-3xl text-center">
           <Feather className="w-8 h-8 text-[#f5c07a] mx-auto mb-4" />

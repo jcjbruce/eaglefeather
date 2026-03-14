@@ -3,7 +3,7 @@ import { useSearch } from "wouter";
 import { MapPin, Globe, Building2, Mountain, ChevronRight, Search } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
 import { ResourceCard } from "@/components/ResourceCard";
-import { trpc } from "@/lib/trpc";
+import { MOCK_CATEGORIES, getFilteredResources, getProvinceCounts } from "@/lib/mockData";
 
 const JURISDICTIONS = [
   { code: "National", name: "National Resources", shortName: "National", type: "national", description: "Organizations that serve First Nations peoples across all of Canada." },
@@ -17,7 +17,7 @@ const JURISDICTIONS = [
   { code: "PE", name: "Prince Edward Island", shortName: "P.E.I.", type: "province", description: "Health resources for First Nations peoples in Prince Edward Island, part of Mi'kma'ki." },
   { code: "QC", name: "Quebec", shortName: "Quebec", type: "province", description: "Health resources for First Nations peoples in Quebec, home to 11 First Nations." },
   { code: "SK", name: "Saskatchewan", shortName: "Sask.", type: "province", description: "Health resources for First Nations peoples in Saskatchewan, including Treaty 4, 5, 6, 8, and 10 territories." },
-  { code: "NT", name: "Northwest Territories", shortName: "N.W.T.", type: "territory", description: "Health resources for First Nations peoples in the Northwest Territories, including Dene and Tłı̨chǫ communities." },
+  { code: "NT", name: "Northwest Territories", shortName: "N.W.T.", type: "territory", description: "Health resources for First Nations peoples in the Northwest Territories, including Dene and Tlicho communities." },
   { code: "NU", name: "Nunavut", shortName: "Nunavut", type: "territory", description: "Health resources available in Nunavut." },
   { code: "YT", name: "Yukon", shortName: "Yukon", type: "territory", description: "Health resources for First Nations peoples in Yukon, home to 14 Yukon First Nations." },
 ];
@@ -31,20 +31,15 @@ export default function Provinces() {
 
   const selectedJurisdiction = JURISDICTIONS.find(j => j.code === selected);
 
-  // Get counts per province for the sidebar badges (only province-specific counts)
-  const { data: provinceCounts = {} } = trpc.resources.countsByProvince.useQuery();
+  const provinceCounts = getProvinceCounts();
+  const allCategories = MOCK_CATEGORIES;
 
-  // Get categories for filtering within a region
-  const { data: allCategories = [] } = trpc.categories.list.useQuery();
-
-  // Backend now only returns resources explicitly tagged with the selected province
-  const { data: resources = [], isLoading } = trpc.resources.list.useQuery(
-    {
-      province: selected || undefined,
-      categoryId: categoryFilter ? Number(categoryFilter) : undefined,
-    },
-    { enabled: !!selected }
-  );
+  const resources = selected
+    ? getFilteredResources({
+        province: selected || undefined,
+        categoryId: categoryFilter ? Number(categoryFilter) : undefined,
+      })
+    : [];
 
   const getCount = (code: string) => provinceCounts[code] || 0;
 
@@ -150,11 +145,9 @@ export default function Provinces() {
                 <div className="mb-6">
                   <h2 className="font-serif text-2xl font-bold text-foreground">{selectedJurisdiction?.name}</h2>
                   <p className="text-muted-foreground text-sm mt-1">{selectedJurisdiction?.description}</p>
-                  {!isLoading && (
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {resources.length} resource{resources.length !== 1 ? "s" : ""} found
-                    </p>
-                  )}
+                  <p className="text-sm text-muted-foreground mt-2">
+                    {resources.length} resource{resources.length !== 1 ? "s" : ""} found
+                  </p>
                 </div>
 
                 {/* Category filter pills */}
@@ -182,17 +175,7 @@ export default function Provinces() {
                   </div>
                 )}
 
-                {isLoading ? (
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {[...Array(6)].map((_, i) => (
-                      <div key={i} className="bg-white rounded-xl border border-border p-5 animate-pulse">
-                        <div className="h-4 bg-muted rounded w-3/4 mb-3" />
-                        <div className="h-3 bg-muted rounded w-full mb-1" />
-                        <div className="h-3 bg-muted rounded w-5/6" />
-                      </div>
-                    ))}
-                  </div>
-                ) : resources.length === 0 ? (
+                {resources.length === 0 ? (
                   <div className="text-center py-12 text-muted-foreground bg-white rounded-xl border border-border">
                     <Search className="w-10 h-10 mx-auto mb-3 opacity-20" />
                     <p className="font-medium">No resources found for this region{categoryFilter ? " and topic" : ""}.</p>
