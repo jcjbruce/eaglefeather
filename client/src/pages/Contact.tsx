@@ -35,7 +35,7 @@ export default function Contact() {
         setSubmitted(true);
       }
     } catch {
-      alert("Something went wrong. Please try again or email info@eaglefeather.ca directly.");
+      alert("Something went wrong. Please try again.");
     } finally {
       setSending(false);
     }
@@ -66,11 +66,11 @@ export default function Contact() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Mail className="w-4 h-4 text-[#0A6E60]" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#0A6E60]">Email</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#0A6E60]">Contact</span>
               </div>
-              <a href="mailto:info@eaglefeather.ca" className="text-sm text-gray-700 hover:text-[#0A6E60] transition-colors">
-                info@eaglefeather.ca
-              </a>
+              <p className="text-sm text-gray-700">
+                Use the form on this page to reach us
+              </p>
             </div>
             <div>
               <div className="flex items-center gap-2 mb-2">

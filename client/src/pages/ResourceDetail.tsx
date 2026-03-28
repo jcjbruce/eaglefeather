@@ -205,7 +205,7 @@ export default function ResourceDetail() {
                 )}
                 {resource.email && (
                   <a
-                    href={`mailto:${resource.email}`}
+                    href="/contact"
                     className="flex items-center gap-3 text-primary hover:underline no-underline"
                   >
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
@@ -213,7 +213,7 @@ export default function ResourceDetail() {
                     </div>
                     <div>
                       <div className="text-xs text-muted-foreground">Email</div>
-                      <div className="text-sm">{resource.email}</div>
+                      <div className="text-sm">Contact Us</div>
                     </div>
                   </a>
                 )}
