@@ -30,19 +30,43 @@ export default function Submit() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.resourceName.trim()) {
       toast.error("Resource name is required.");
       return;
     }
     setIsPending(true);
-    // Simulate submission in static mode
-    setTimeout(() => {
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "f642c143-997e-4d9e-9be2-7b9917152700",
+          subject: "[EagleFeather] Resource Submission",
+          resource_name: form.resourceName,
+          url: form.url || "N/A",
+          phone: form.phone || "N/A",
+          category: form.categorySlug || "N/A",
+          province: form.province || "N/A",
+          who_it_serves: form.whoItServes || "N/A",
+          description: form.description || "N/A",
+          contact_name: form.contactName || "N/A",
+          contact_email: form.contactEmail || "N/A",
+          comment: form.comment || "N/A",
+        }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
       setIsPending(false);
-      setSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 800);
+    }
   };
 
   if (submitted) {

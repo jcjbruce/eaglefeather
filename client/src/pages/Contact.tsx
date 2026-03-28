@@ -77,7 +77,7 @@ export default function Contact() {
                 <Clock className="w-4 h-4 text-[#0A6E60]" />
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#0A6E60]">Response Time</span>
               </div>
-              <p className="text-sm text-gray-600">We aim to respond within 3–5 business days.</p>
+              <p className="text-sm text-gray-600">We aim to respond within 24–48 hours.</p>
             </div>
           </div>
 
@@ -87,7 +87,7 @@ export default function Contact() {
               <div className="bg-[#0A6E60]/10 border border-[#0A6E60]/30 rounded-lg p-10 text-center">
                 <CheckCircle className="w-12 h-12 text-[#0A6E60] mx-auto mb-4" />
                 <h3 className="font-serif text-2xl font-bold text-[#0d2b26] mb-3">Message received.</h3>
-                <p className="text-gray-600 mb-6">Thank you for reaching out. We'll get back to you within 3–5 business days.</p>
+                <p className="text-gray-600 mb-6">Thank you for reaching out. We'll get back to you within 24–48 hours.</p>
                 <button
                   onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", organization: "", subject: "", message: "" }); }}
                   className="text-sm text-[#0A6E60] underline"

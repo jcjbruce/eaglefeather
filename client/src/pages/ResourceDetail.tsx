@@ -5,18 +5,36 @@ import { PageLayout } from "@/components/Layout";
 import { toast } from "sonner";
 import { getResourceById, MOCK_CATEGORIES } from "@/lib/mockData";
 
-function ReportModal({ resourceId, onClose }: { resourceId: number; onClose: () => void }) {
+function ReportModal({ resourceName, onClose }: { resourceName: string; onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
   const [isPending, setIsPending] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsPending(true);
-    setTimeout(() => {
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "f642c143-997e-4d9e-9be2-7b9917152700",
+          subject: "[EagleFeather] Resource Report",
+          resource_name: resourceName,
+          email: email || "Not provided",
+          issue: comment || "No details provided",
+        }),
+      });
+      if (res.ok) {
+        toast.success("Report submitted. Thank you for helping keep this directory accurate.");
+        onClose();
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
       setIsPending(false);
-      toast.success("Report submitted. Thank you for helping keep this directory accurate.");
-      onClose();
-    }, 500);
+    }
   };
 
   return (
@@ -253,7 +271,7 @@ export default function ResourceDetail() {
         </div>
       </div>
 
-      {showReport && <ReportModal resourceId={resource.id} onClose={() => setShowReport(false)} />}
+      {showReport && <ReportModal resourceName={resource.name} onClose={() => setShowReport(false)} />}
     </PageLayout>
   );
 }
