@@ -11,6 +11,7 @@ import Crisis from "./pages/Crisis";
 import About from "./pages/About";
 import Submit from "./pages/Submit";
 import Admin from "./pages/Admin";
+import Contact from "./pages/Contact";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/resource/:id" component={ResourceDetail} />
       <Route path="/crisis" component={Crisis} />
       <Route path="/about" component={About} />
+      <Route path="/contact" component={Contact} />
       <Route path="/submit" component={Submit} />
       <Route path="/admin" component={Admin} />
       <Route path="/404" component={NotFound} />

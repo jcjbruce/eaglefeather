@@ -27,6 +27,7 @@ const navLinks = [
   { href: "/browse", label: "Browse Resources" },
   { href: "/crisis", label: "Crisis Support" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
