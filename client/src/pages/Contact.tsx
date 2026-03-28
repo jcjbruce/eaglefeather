@@ -18,15 +18,16 @@ export default function Contact() {
     if (!formData.name || !formData.email || !formData.message) return;
     setSending(true);
     try {
-      const res = await fetch("https://formsubmit.co/ajax/info@civicfirm.com", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `[EagleFeather] ${formData.subject || "General Inquiry"} from ${formData.name}`,
+          access_key: "f642c143-997e-4d9e-9be2-7b9917152700",
+          subject: `[EagleFeather] ${formData.subject || "General Inquiry"} from ${formData.name}`,
           name: formData.name,
           email: formData.email,
           organization: formData.organization || "N/A",
-          subject: formData.subject || "N/A",
+          topic: formData.subject || "N/A",
           message: formData.message,
         }),
       });
