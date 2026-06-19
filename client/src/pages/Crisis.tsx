@@ -53,7 +53,7 @@ export default function Crisis() {
     <PageLayout>
       {/* Hero */}
       <section className="bg-[#0d2b26] text-white py-12">
-        <div className="container max-w-3xl">
+        <div className="container max-w-4xl">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center">
               <Heart className="w-5 h-5 text-white" />
@@ -72,7 +72,7 @@ export default function Crisis() {
       </section>
 
       {/* Primary crisis lines */}
-      <section className="container py-10 max-w-3xl">
+      <section className="container py-10 max-w-4xl">
         <div className="space-y-6">
           {CRISIS_LINES.filter(l => l.primary).map(line => (
             <article
