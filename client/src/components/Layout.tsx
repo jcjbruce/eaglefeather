@@ -36,11 +36,14 @@ export function Navbar() {
 
   return (
     <nav className="bg-white border-b border-border sticky top-0 z-40 shadow-sm" role="navigation" aria-label="Main navigation">
-      <div className="container flex items-center justify-between h-16">
+      <div className="container flex items-center justify-between h-16 md:h-[72px]">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-serif font-bold text-xl text-primary no-underline">
-          <EagleFeatherLogo className="w-9 h-9" />
-          <span>EagleFeather</span>
+        <Link href="/" className="flex items-center gap-2.5 no-underline">
+          <EagleFeatherLogo className="w-11 h-11 md:w-12 md:h-12" />
+          <div className="flex flex-col leading-none">
+            <span className="font-serif font-bold text-lg md:text-xl text-primary tracking-tight">EagleFeather</span>
+            <span className="text-[0.6rem] uppercase tracking-[0.15em] text-foreground/50 font-medium">.ca</span>
+          </div>
         </Link>
 
         {/* Desktop nav */}
@@ -112,9 +115,12 @@ export function Footer() {
       <div className="container py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-2 mb-3">
-            <EagleFeatherLogo className="w-9 h-9" />
-            <span className="font-serif font-bold text-lg">EagleFeather.ca</span>
+          <div className="flex items-center gap-2.5 mb-3">
+            <EagleFeatherLogo className="w-11 h-11" />
+            <div className="flex flex-col leading-none">
+              <span className="font-serif font-bold text-lg">EagleFeather</span>
+              <span className="text-[0.6rem] uppercase tracking-[0.15em] text-white/50 font-medium">.ca</span>
+            </div>
           </div>
           <p className="text-sm text-white/70 leading-relaxed mb-3">
             A verified health resource directory for First Nations peoples across Canada.

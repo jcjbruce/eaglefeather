@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Search, Phone, MapPin, ChevronRight, Feather, Brain, Stethoscope, HeartHandshake, Baby, Users, Star, Heart } from "lucide-react";
+import { Search, Phone, MapPin, ChevronRight, Feather, Brain, Stethoscope, HeartHandshake, Baby, Users, Star, Heart, Building2, ShieldCheck, Scale } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
 import { MOCK_CATEGORIES } from "@/lib/mockData";
 
@@ -13,6 +13,9 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   "cultural-wellness":<Feather className="w-6 h-6" />,
   "youth":            <Star className="w-6 h-6" />,
   "womens-health":    <Heart className="w-6 h-6" />,
+  "community-health": <Building2 className="w-6 h-6" />,
+  "nihb-benefits":    <ShieldCheck className="w-6 h-6" />,
+  "policy-advocacy":  <Scale className="w-6 h-6" />,
 };
 
 const PROVINCES = [
