@@ -54,9 +54,9 @@
   /* Deep teal #0A6E60 */
   --primary: oklch(0.44 0.09 178);
   --primary-foreground: oklch(0.98 0.005 178);
-  /* Warm amber #B8620A */
-  --secondary: oklch(0.58 0.13 55);
-  --secondary-foreground: oklch(0.98 0.005 55);
+  /* Warm gold #D4A843 — matches logo feather */
+  --secondary: oklch(0.73 0.12 80);
+  --secondary-foreground: oklch(0.15 0.02 80);
   --muted: oklch(0.93 0.01 85);
   --muted-foreground: oklch(0.50 0.02 200);
   --accent: oklch(0.93 0.02 85);
@@ -163,8 +163,8 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
+    padding-left: 1.25rem; /* 20px - mobile padding */
+    padding-right: 1.25rem;
   }
 
   .flex {
@@ -174,16 +174,16 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
+      padding-left: 2.5rem; /* 40px - tablet padding */
+      padding-right: 2.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-      max-width: 1200px;
+      padding-left: 4rem; /* 64px - desktop padding */
+      padding-right: 4rem;
+      max-width: 1280px;
     }
   }
 }

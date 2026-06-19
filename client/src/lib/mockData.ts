@@ -1,4 +1,4 @@
-// Resource directory data — 164 verified entries from eaglefeather_directory_final.csv
+// Resource directory data — 164 entries from eaglefeather_directory_final.csv
 
 export type Category = {
   id: number;
@@ -2697,6 +2697,9 @@ export function getFilteredResources(opts?: {
       (r.organization?.toLowerCase().includes(q) ?? false)
     );
   }
+
+  // Sort alphabetically by name
+  results.sort((a, b) => a.name.localeCompare(b.name));
 
   return results;
 }

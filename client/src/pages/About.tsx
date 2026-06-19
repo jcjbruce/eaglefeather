@@ -15,9 +15,9 @@ export default function About() {
             A directory built with care, for community.
           </h1>
           <p className="text-white/80 text-lg leading-relaxed">
-            EagleFeather.ca exists because finding culturally safe, verified health resources
-            for First Nations peoples shouldn't be hard. Every listing is checked by a real person.
-            No advertising. No paid placements. No automated scraping.
+            EagleFeather.ca exists because finding culturally safe health resources
+            for First Nations peoples shouldn't be hard.
+            No advertising. No paid placements.
           </p>
         </div>
       </section>
@@ -42,8 +42,8 @@ export default function About() {
             </p>
             <p>
               This site is not a health service provider. We do not offer medical advice, counselling, or
-              clinical services. We are a directory — a curated, verified list of organizations and programs
-              that do provide those services. Think of us as a trusted guide to the landscape of First Nations
+              clinical services. We are a directory — a curated list of organizations and programs
+              that do provide those services. Think of us as a guide to the landscape of First Nations
               health supports in Canada.
             </p>
           </div>
@@ -90,19 +90,17 @@ export default function About() {
             <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
               <Shield className="w-4 h-4 text-primary" />
             </div>
-            <h2 className="font-serif text-2xl font-bold">Editorial standards</h2>
+            <h2 className="font-serif text-2xl font-bold">Our standards</h2>
           </div>
           <p className="text-foreground/80 leading-relaxed mb-4">
-            Every resource listed on EagleFeather.ca meets the following criteria before it is published:
+            We aim to maintain a high-quality directory. Here's what guides our listings:
           </p>
           <div className="space-y-3">
             {[
-              { title: "Human verification", desc: "A real person has reviewed the resource, confirmed the contact details are accurate, and confirmed the organization is active." },
               { title: "First Nations relevance", desc: "The resource specifically serves First Nations peoples, or is a national resource that includes First Nations peoples in its mandate." },
               { title: "No paid placements", desc: "Resources are never listed in exchange for payment. We do not accept advertising, sponsorships, or affiliate arrangements." },
-              { title: "Regular review", desc: "Resources are reviewed at least every six months. Resources that have not been reviewed recently are flagged with a 'Needs review' badge." },
-              { title: "Community submissions reviewed", desc: "Community members can submit resources for consideration. All submissions are reviewed by our team before publishing — nothing goes live automatically." },
-              { title: "Broken link monitoring", desc: "Our system automatically checks resource URLs weekly and flags broken links for human review." },
+              { title: "Community submissions welcome", desc: "Community members can submit resources for consideration. Submissions are reviewed before being added to the directory." },
+              { title: "Open to corrections", desc: "If you find an error, a broken link, or a resource that no longer exists, please use the Report button on any resource card to let us know." },
             ].map(item => (
               <div key={item.title} className="flex items-start gap-3 bg-white rounded-lg border border-border p-4">
                 <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
@@ -112,28 +110,6 @@ export default function About() {
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Verification methodology */}
-        <section>
-          <h2 className="font-serif text-2xl font-bold mb-4">Verification methodology</h2>
-          <div className="text-foreground/80 leading-relaxed space-y-3 text-sm">
-            <p>
-              When a resource is submitted or added by our team, we follow this process:
-            </p>
-            <ol className="list-decimal list-inside space-y-2 pl-2">
-              <li>Confirm the organization exists and is currently active (website, phone, or public records check).</li>
-              <li>Confirm the resource is accessible to First Nations peoples (not restricted to staff, members, or specific communities without public access).</li>
-              <li>Confirm contact details (phone, website, email) are accurate and functional.</li>
-              <li>Record the verification date. Resources are flagged for re-review after six months.</li>
-              <li>Automated link checking runs weekly to catch broken URLs between manual reviews.</li>
-            </ol>
-            <p>
-              We acknowledge that we are not infallible. If you find an error, a broken link, or a resource that
-              no longer exists, please use the "Report" button on any resource card to let us know.
-              Your reports are reviewed by a human within a reasonable timeframe.
-            </p>
           </div>
         </section>
 

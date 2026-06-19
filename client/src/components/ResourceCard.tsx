@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Phone, Globe, AlertCircle, CheckCircle, Clock, ExternalLink, Flag } from "lucide-react";
+import { Phone, Globe, AlertCircle, ExternalLink, Flag } from "lucide-react";
 import { toast } from "sonner";
 
 type Resource = {
@@ -25,39 +25,13 @@ const CATEGORY_COLORS: Record<number, string> = {
   2: "#0A6E60", // physical health
   3: "#059669", // substance use
   4: "#d97706", // maternal/child
-  5: "#92400e", // elders
   6: "#2563eb", // cultural wellness
   7: "#0891b2", // youth
   8: "#db2777", // women's health
+  9: "#6366f1", // community health centres
+  10: "#ea580c", // NIHB & benefits
+  11: "#475569", // policy & advocacy
 };
-
-function VerificationBadge({ lastVerified }: { lastVerified?: Date | null }) {
-  if (!lastVerified) {
-    return (
-      <span className="inline-flex items-center gap-1 text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">
-        <Clock className="w-3 h-3" /> Needs review
-      </span>
-    );
-  }
-  const date = new Date(lastVerified);
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-  const needsReview = date < sixMonthsAgo;
-
-  if (needsReview) {
-    return (
-      <span className="inline-flex items-center gap-1 text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">
-        <Clock className="w-3 h-3" /> Needs review
-      </span>
-    );
-  }
-  return (
-    <span className="inline-flex items-center gap-1 text-xs text-green-700 bg-green-50 px-2 py-0.5 rounded-full">
-      <CheckCircle className="w-3 h-3" />
-      Last verified: {date.toLocaleDateString("en-CA", { month: "short", year: "numeric" })}
-    </span>
-  );
-}
 
 function ReportModal({ resourceId, onClose }: { resourceId: number; onClose: () => void }) {
   const [email, setEmail] = useState("");
@@ -194,8 +168,7 @@ export function ResourceCard({ resource, showCategory = false }: { resource: Res
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-1 border-t border-border/50">
-          <VerificationBadge lastVerified={resource.lastVerified} />
+        <div className="flex items-center justify-end pt-1 border-t border-border/50">
           <button
             onClick={() => setShowReport(true)}
             className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors"

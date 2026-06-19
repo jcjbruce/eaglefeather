@@ -24,7 +24,7 @@ export default function Submit() {
     comment: "",
   });
 
-  const categories = MOCK_CATEGORIES;
+  const categories = [...MOCK_CATEGORIES].sort((a, b) => a.name.localeCompare(b.name));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -78,9 +78,8 @@ export default function Submit() {
           </div>
           <h1 className="font-serif text-3xl font-bold mb-3">Thank you for your submission!</h1>
           <p className="text-muted-foreground text-base leading-relaxed mb-6">
-            Your resource has been received and will be reviewed by our team before being published.
-            We check all submissions to ensure they meet our editorial standards and are relevant to
-            First Nations health. This process typically takes a few days.
+            Your resource has been received and will be reviewed for inclusion in the directory.
+            This typically takes a few days.
           </p>
           <p className="text-sm text-muted-foreground mb-8">
             If you provided your email, we'll reach out if we have questions.
@@ -109,8 +108,7 @@ export default function Submit() {
           <h1 className="font-serif text-3xl font-bold text-foreground mb-2">Submit a Resource</h1>
           <p className="text-muted-foreground text-base">
             Know of a health resource for First Nations peoples that isn't listed here?
-            Submit it below. All submissions are reviewed by our team before publishing —
-            nothing goes live automatically.
+            Submit it below and we'll review it for inclusion in our directory.
           </p>
         </div>
       </div>
@@ -275,9 +273,9 @@ export default function Submit() {
 
           {/* Disclaimer */}
           <div className="bg-muted rounded-lg p-4 text-sm text-muted-foreground">
-            <strong>Review process:</strong> All submissions are reviewed by a human before publishing.
-            We check that the resource is active, relevant to First Nations health, and meets our editorial standards.
-            Submissions that don't meet our criteria will not be published, but we appreciate every submission.
+            <strong>Note:</strong> Submissions are reviewed before being added to the directory.
+            We look for resources that are active and relevant to First Nations health.
+            We appreciate every submission.
           </div>
 
           <button

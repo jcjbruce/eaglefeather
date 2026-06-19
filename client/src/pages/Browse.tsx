@@ -55,8 +55,8 @@ export default function Browse() {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [submittedSearch, setSubmittedSearch] = useState(initialSearch);
 
-  // Static data
-  const allCategories = MOCK_CATEGORIES;
+  // Static data — sorted alphabetically
+  const allCategories = [...MOCK_CATEGORIES].sort((a, b) => a.name.localeCompare(b.name));
   const crossCounts = useMemo(() => getCrossCountsByProvinceAndCategory(), []);
 
   // Find the category ID for the selected topic slug

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
-import { useState } from "react";
-import { Menu, X, Phone, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Phone, ExternalLink, ArrowUp } from "lucide-react";
 import { EagleFeatherLogo } from "./Logo";
 
 // ── Crisis Banner ─────────────────────────────────────────────────────────────
@@ -23,10 +23,9 @@ export function CrisisBanner() {
 
 // ── Navbar ────────────────────────────────────────────────────────────────────
 const navLinks = [
-  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
   { href: "/browse", label: "Browse Resources" },
   { href: "/crisis", label: "Crisis Support" },
-  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -40,10 +39,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 no-underline">
           <EagleFeatherLogo className="w-11 h-11 md:w-12 md:h-12" />
-          <div className="flex flex-col leading-none">
-            <span className="font-serif font-bold text-lg md:text-xl text-primary tracking-tight">EagleFeather</span>
-            <span className="text-[0.6rem] uppercase tracking-[0.15em] text-foreground/50 font-medium">.ca</span>
-          </div>
+          <span className="font-serif font-bold text-lg md:text-xl text-primary tracking-tight">EagleFeather</span>
         </Link>
 
         {/* Desktop nav */}
@@ -63,7 +59,7 @@ export function Navbar() {
           ))}
           <Link
             href="/submit"
-            className="bg-secondary text-white text-sm font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity no-underline"
+            className="bg-primary text-white text-sm font-semibold px-4 py-2 rounded-md hover:opacity-90 transition-opacity no-underline"
           >
             Submit a Resource
           </Link>
@@ -97,7 +93,7 @@ export function Navbar() {
           ))}
           <Link
             href="/submit"
-            className="bg-secondary text-white text-sm font-semibold px-4 py-2 rounded-md text-center mt-2 no-underline"
+            className="bg-primary text-white text-sm font-semibold px-4 py-2 rounded-md text-center mt-2 no-underline"
             onClick={() => setOpen(false)}
           >
             Submit a Resource
@@ -109,6 +105,14 @@ export function Navbar() {
 }
 
 // ── Footer ────────────────────────────────────────────────────────────────────
+const footerLinks = [
+  { href: "/about", label: "About" },
+  { href: "/browse", label: "Browse Resources" },
+  { href: "/crisis", label: "Crisis Support" },
+  { href: "/contact", label: "Contact" },
+  { href: "/submit", label: "Submit a Resource" },
+];
+
 export function Footer() {
   return (
     <footer className="bg-[#0d2b26] text-white mt-16">
@@ -117,20 +121,11 @@ export function Footer() {
         <div>
           <div className="flex items-center gap-2.5 mb-3">
             <EagleFeatherLogo className="w-11 h-11" />
-            <div className="flex flex-col leading-none">
-              <span className="font-serif font-bold text-lg">EagleFeather</span>
-              <span className="text-[0.6rem] uppercase tracking-[0.15em] text-white/50 font-medium">.ca</span>
-            </div>
+            <span className="font-serif font-bold text-lg">EagleFeather</span>
           </div>
-          <p className="text-sm text-white/70 leading-relaxed mb-3">
-            A verified health resource directory for First Nations peoples across Canada.
+          <p className="text-sm text-white/70 leading-relaxed">
+            A health resource directory for First Nations peoples across Canada.
             Free, community-facing, and editorially independent.
-          </p>
-          <p className="text-xs text-white/50">
-            Sister site:{" "}
-            <a href="https://researchcircle.ca" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/80">
-              ResearchCircle.ca
-            </a>
           </p>
         </div>
 
@@ -138,22 +133,17 @@ export function Footer() {
         <div>
           <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60 mb-3">Navigate</h3>
           <ul className="space-y-2 text-sm">
-            {navLinks.map(link => (
+            {footerLinks.map(link => (
               <li key={link.href}>
                 <Link href={link.href} className="text-white/80 hover:text-white no-underline transition-colors">
                   {link.label}
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/submit" className="text-white/80 hover:text-white no-underline transition-colors">
-                Submit a Resource
-              </Link>
-            </li>
           </ul>
         </div>
 
-        {/* Crosslinks & Crisis */}
+        {/* Communities & Crisis */}
         <div>
           <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60 mb-3">Other Communities</h3>
           <ul className="space-y-2 text-sm mb-4">
@@ -168,7 +158,7 @@ export function Footer() {
               </a>
             </li>
           </ul>
-          <div className="bg-red-900/40 rounded-md p-3 text-sm">
+          <div className="crisis-banner rounded-md p-3 text-sm">
             <p className="font-semibold mb-1">Crisis support — 24/7</p>
             <a href="tel:988" className="flex items-center gap-1 text-white hover:opacity-80 font-bold">
               <Phone className="w-3 h-3" /> 988
@@ -182,11 +172,44 @@ export function Footer() {
 
       <div className="border-t border-white/10 py-4">
         <div className="container flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-white/40">
-          <p>© {new Date().getFullYear()} EagleFeather.ca — All resources verified by humans before publishing.</p>
+          <p>© {new Date().getFullYear()} EagleFeather.ca — A free health resource directory for First Nations peoples.</p>
           <p>No advertising. No affiliate links. No paid placements.</p>
         </div>
       </div>
+
+      {/* Developed by Mentee */}
+      <div className="py-4" style={{ backgroundColor: "oklch(0.95 0.012 178)" }}>
+        <div className="container flex items-center justify-center gap-3">
+          <span className="text-sm font-semibold" style={{ color: "oklch(0.30 0.04 178)" }}>Developed by</span>
+          <a href="https://mentee.ca" target="_blank" rel="noopener noreferrer" className="no-underline">
+            <img src="/mentee.png" alt="Mentee" className="h-7" />
+          </a>
+        </div>
+      </div>
     </footer>
+  );
+}
+
+// ── Scroll to Top ────────────────────────────────────────────────────────────
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className={`fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:opacity-90 transition-all ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+      }`}
+      aria-label="Scroll to top"
+    >
+      <ArrowUp className="w-5 h-5" />
+    </button>
   );
 }
 
@@ -198,6 +221,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

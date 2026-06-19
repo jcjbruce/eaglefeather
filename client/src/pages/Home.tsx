@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Search, Phone, MapPin, ChevronRight, Feather, Brain, Stethoscope, HeartHandshake, Baby, Users, Star, Heart, Building2, ShieldCheck, Scale } from "lucide-react";
+import { Search, Phone, MapPin, ChevronRight, Feather, Brain, Stethoscope, HeartHandshake, Baby, Users, Star, Heart, Building2, ShieldCheck, Scale, ArrowRight } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
-import { MOCK_CATEGORIES } from "@/lib/mockData";
+import { MOCK_CATEGORIES, MOCK_RESOURCES } from "@/lib/mockData";
+import { EagleFeatherLogo } from "@/components/Logo";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-  "mental-health":    <Brain className="w-6 h-6" />,
-  "physical-health":  <Stethoscope className="w-6 h-6" />,
-  "substance-use":    <HeartHandshake className="w-6 h-6" />,
-  "maternal-child":   <Baby className="w-6 h-6" />,
-  "elders":           <Users className="w-6 h-6" />,
-  "cultural-wellness":<Feather className="w-6 h-6" />,
-  "youth":            <Star className="w-6 h-6" />,
-  "womens-health":    <Heart className="w-6 h-6" />,
   "community-health": <Building2 className="w-6 h-6" />,
+  "cultural-wellness":<Feather className="w-6 h-6" />,
+  "maternal-child":   <Baby className="w-6 h-6" />,
+  "mental-health":    <Brain className="w-6 h-6" />,
   "nihb-benefits":    <ShieldCheck className="w-6 h-6" />,
+  "physical-health":  <Stethoscope className="w-6 h-6" />,
   "policy-advocacy":  <Scale className="w-6 h-6" />,
+  "substance-use":    <HeartHandshake className="w-6 h-6" />,
+  "womens-health":    <Heart className="w-6 h-6" />,
+  "youth":            <Star className="w-6 h-6" />,
 };
 
 const PROVINCES = [
@@ -32,7 +32,8 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [, navigate] = useLocation();
 
-  const categories = MOCK_CATEGORIES;
+  const categories = [...MOCK_CATEGORIES].sort((a, b) => a.name.localeCompare(b.name));
+  const totalResources = MOCK_RESOURCES.filter(r => r.isPublished).length;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,41 +43,52 @@ export default function Home() {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-[#0d2b26] to-[#0A6E60] text-white py-16 md:py-24">
+      <section className="bg-white border-b border-border py-16 md:py-24">
         <div className="container">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-widest text-white/60 mb-3">
-              First Nations Health Resources — Canada
-            </p>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight mb-4">
-              Find health support that{" "}
-              <span className="italic text-[#f5c07a]">understands you</span>
-            </h1>
-            <p className="text-lg text-white/80 leading-relaxed mb-8">
-              A free, verified directory of health resources for First Nations peoples across all 13 provinces and territories.
-              Every resource is checked by a real person before it's listed.
-            </p>
+          <div className="flex items-center gap-10 md:gap-16 lg:gap-24">
+            <div className="flex-1 max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-widest text-[#D4A843] mb-3">
+                First Nations Health Resources — Canada
+              </p>
+              <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight mb-4 text-[#0d2b26]">
+                Find health support that{" "}
+                <span className="italic text-primary">understands you</span>
+              </h1>
+              <p className="text-lg text-foreground/70 leading-relaxed mb-8">
+                A free directory of {totalResources}+ health resources for First Nations peoples across all 13 provinces and territories.
+                No advertising. No paid placements.
+              </p>
 
-            {/* Search bar */}
-            <form onSubmit={handleSearch} className="flex gap-2 max-w-xl">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                <input
-                  type="search"
-                  placeholder="Search for a resource, topic, or service..."
-                  className="w-full bg-white/10 border border-white/20 rounded-lg pl-9 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 text-sm"
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  aria-label="Search health resources"
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-[#B8620A] hover:bg-[#9a5009] text-white font-semibold px-5 py-3 rounded-lg transition-colors text-sm"
-              >
-                Search
-              </button>
-            </form>
+              {/* Search bar */}
+              <form onSubmit={handleSearch} className="flex gap-2 max-w-xl">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input
+                    type="search"
+                    placeholder="Search for a resource, topic, or service..."
+                    className="w-full border border-border rounded-lg pl-9 pr-4 py-3 text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    aria-label="Search health resources"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-primary hover:bg-primary/90 text-white font-semibold px-5 py-3 rounded-lg transition-colors text-sm"
+                >
+                  Search
+                </button>
+              </form>
+
+              <a href="/browse" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium mt-4 transition-colors no-underline">
+                Or browse all resources <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            {/* Hero logo */}
+            <div className="hidden md:flex items-center justify-center shrink-0">
+              <EagleFeatherLogo className="w-64 h-64 lg:w-80 lg:h-80" />
+            </div>
           </div>
         </div>
       </section>
@@ -182,10 +194,10 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-2">About EagleFeather</p>
-            <h2 className="font-serif text-3xl font-bold mb-4">Built for community. Verified by people.</h2>
+            <h2 className="font-serif text-3xl font-bold mb-4">Built for community. Open to all.</h2>
             <p className="text-base text-foreground/80 leading-relaxed mb-4">
               EagleFeather.ca is a free, publicly accessible health resource directory for First Nations peoples across Canada.
-              Every resource is verified by a real person before it's listed — no automated scraping, no paid placements.
+              No advertising, no paid placements — just a curated collection of health supports.
             </p>
             <p className="text-base text-foreground/80 leading-relaxed mb-6">
               We focus specifically on First Nations peoples. We respectfully acknowledge that Inuit and Metis peoples
@@ -202,8 +214,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { num: "99+", label: "Verified resources" },
-              { num: "8", label: "Health categories" },
+              { num: `${totalResources}+`, label: "Health resources" },
+              { num: `${categories.length}`, label: "Health categories" },
               { num: "13", label: "Provinces & territories" },
               { num: "100%", label: "Free, no advertising" },
             ].map(stat => (
@@ -217,21 +229,24 @@ export default function Home() {
       </section>
 
       {/* Land Acknowledgement */}
-      <section className="bg-[#0d2b26] text-white py-12">
-        <div className="container max-w-3xl text-center">
-          <Feather className="w-8 h-8 text-[#f5c07a] mx-auto mb-4" />
-          <h2 className="font-serif text-2xl font-bold mb-4">Land Acknowledgement</h2>
-          <p className="text-white/80 leading-relaxed text-base">
-            EagleFeather.ca was created to serve First Nations peoples across the lands now called Canada —
-            lands that have been home to Indigenous peoples since time immemorial.
-            We acknowledge the sovereignty of all First Nations whose territories span this country,
-            and we recognize that access to health and wellness is a right, not a privilege.
-            This directory is offered in a spirit of respect, solidarity, and service.
-          </p>
-          <p className="text-white/50 text-sm mt-4 italic">
-            We are committed to working with First Nations advisors to refine this acknowledgement
-            to reflect the national scope of this site.
-          </p>
+      <section className="py-16 bg-muted">
+        <div className="container">
+          <div className="max-w-4xl mx-auto relative rounded-2xl border border-border bg-white p-8 sm:p-12 lg:p-14 shadow-sm overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-[#0d2b26] to-primary" />
+            <div className="text-center">
+              <div className="flex items-center gap-3 mb-6 justify-center">
+                <EagleFeatherLogo className="w-9 h-10 sm:w-11 sm:h-12" />
+                <span className="text-xs sm:text-sm font-bold tracking-[0.2em] text-primary uppercase">Land Acknowledgement</span>
+              </div>
+              <p className="text-foreground/70 leading-[2] text-sm sm:text-base italic max-w-3xl mx-auto">
+                This directory was created to serve First Nations peoples across the lands now called Canada —
+                lands that have been home to Indigenous peoples since time immemorial.
+                We acknowledge the sovereignty of all First Nations whose territories span this country,
+                and we recognize that access to health and wellness is a right, not a privilege.
+                This directory is offered in a spirit of respect, solidarity, and service.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </PageLayout>
