@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, ExternalLink, ArrowUp } from "lucide-react";
+import { Menu, X, Phone, ArrowUp } from "lucide-react";
 import { EagleFeatherLogo } from "./Logo";
 
 // ── Crisis Banner ─────────────────────────────────────────────────────────────
@@ -143,30 +143,36 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Communities & Crisis */}
+        {/* Quick links */}
         <div>
-          <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60 mb-3">Other Communities</h3>
-          <ul className="space-y-2 text-sm mb-4">
+          <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60 mb-3">Resources</h3>
+          <ul className="space-y-2 text-sm">
             <li>
-              <a href="https://www.itk.ca" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white flex items-center gap-1 no-underline">
-                <ExternalLink className="w-3 h-3" /> Inuit Tapiriit Kanatami (ITK)
-              </a>
+              <Link href="/browse?topic=mental-health" className="text-white/80 hover:text-white no-underline transition-colors">
+                Mental Health
+              </Link>
             </li>
             <li>
-              <a href="https://www.metisnation.ca" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white flex items-center gap-1 no-underline">
-                <ExternalLink className="w-3 h-3" /> Métis National Council
-              </a>
+              <Link href="/browse?topic=physical-health" className="text-white/80 hover:text-white no-underline transition-colors">
+                Physical Health
+              </Link>
+            </li>
+            <li>
+              <Link href="/browse?topic=substance-use" className="text-white/80 hover:text-white no-underline transition-colors">
+                Substance Use
+              </Link>
+            </li>
+            <li>
+              <Link href="/browse?topic=cultural-wellness" className="text-white/80 hover:text-white no-underline transition-colors">
+                Cultural Wellness
+              </Link>
+            </li>
+            <li>
+              <Link href="/browse" className="text-white/80 hover:text-white no-underline transition-colors">
+                View All Categories
+              </Link>
             </li>
           </ul>
-          <div className="crisis-banner rounded-md p-3 text-sm">
-            <p className="font-semibold mb-1">Crisis support — 24/7</p>
-            <a href="tel:988" className="flex items-center gap-1 text-white hover:opacity-80 font-bold">
-              <Phone className="w-3 h-3" /> 988
-            </a>
-            <a href="tel:18552423310" className="flex items-center gap-1 text-white hover:opacity-80 text-xs mt-1">
-              <Phone className="w-3 h-3" /> Hope for Wellness: 1-855-242-3310
-            </a>
-          </div>
         </div>
       </div>
 
@@ -178,7 +184,7 @@ export function Footer() {
       </div>
 
       {/* Developed by Mentee */}
-      <div className="py-4" style={{ backgroundColor: "oklch(0.95 0.012 178)" }}>
+      <div className="py-6" style={{ backgroundColor: "oklch(0.95 0.012 178)" }}>
         <div className="container flex items-center justify-center gap-3">
           <span className="text-sm font-semibold" style={{ color: "oklch(0.30 0.04 178)" }}>Developed by</span>
           <a href="https://mentee.ca" target="_blank" rel="noopener noreferrer" className="no-underline">

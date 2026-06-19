@@ -1,4 +1,4 @@
-import { Feather, Mail, Clock, Send, CheckCircle } from "lucide-react";
+import { Feather, Send, CheckCircle } from "lucide-react";
 import { PageLayout } from "@/components/Layout";
 import { useState } from "react";
 
@@ -59,30 +59,8 @@ export default function Contact() {
         </div>
       </section>
 
-      <div className="container max-w-4xl py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Mail className="w-4 h-4 text-[#0A6E60]" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#0A6E60]">Contact</span>
-              </div>
-              <p className="text-sm text-gray-700">
-                Use the form on this page to reach us
-              </p>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-4 h-4 text-[#0A6E60]" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#0A6E60]">Response Time</span>
-              </div>
-              <p className="text-sm text-gray-600">We aim to respond within 24–48 hours.</p>
-            </div>
-          </div>
-
-          {/* Form */}
-          <div className="lg:col-span-2">
+      <div className="container max-w-3xl py-12">
+        <div>
             {submitted ? (
               <div className="bg-[#0A6E60]/10 border border-[#0A6E60]/30 rounded-lg p-10 text-center">
                 <CheckCircle className="w-12 h-12 text-[#0A6E60] mx-auto mb-4" />
@@ -175,7 +153,8 @@ export default function Contact() {
                 </button>
               </form>
             )}
-          </div>
+
+            <p className="text-xs text-muted-foreground mt-6 text-center">We aim to respond within 24–48 hours.</p>
         </div>
       </div>
     </PageLayout>

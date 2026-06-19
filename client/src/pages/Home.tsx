@@ -32,7 +32,14 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [, navigate] = useLocation();
 
-  const categories = [...MOCK_CATEGORIES].sort((a, b) => a.name.localeCompare(b.name));
+  // Curated 8 most relevant categories for people seeking health support, in intentional order
+  const FEATURED_SLUGS = [
+    "mental-health", "physical-health", "substance-use", "cultural-wellness",
+    "maternal-child", "youth", "community-health", "nihb-benefits",
+  ];
+  const categories = FEATURED_SLUGS
+    .map(slug => MOCK_CATEGORIES.find(c => c.slug === slug))
+    .filter((c): c is NonNullable<typeof c> => c != null);
   const totalResources = MOCK_RESOURCES.filter(r => r.isPublished).length;
 
   const handleSearch = (e: React.FormEvent) => {
@@ -134,7 +141,7 @@ export default function Home() {
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-2">Browse by Topic</p>
           <h2 className="font-serif text-3xl font-bold text-foreground">Find support by health area</h2>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {categories.map(cat => (
             <a
               key={cat.id}
